@@ -3,7 +3,14 @@ class Blockchain:
         self.chain = []
         self.transactions = []
 
-    def new_block(self):
+    def new_block(self, proof):
+        block = {
+          'index': len(self.chain) + 1,
+          'timstamp': time(),
+          'transactions': self.transactions,
+          'proof': proof,
+          'previous_hash': self.hash(self.last_block())
+        }
         pass
 
     def new_transaction(self, sender, recipient, amount):
