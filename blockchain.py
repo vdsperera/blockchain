@@ -6,7 +6,14 @@ class Blockchain:
     def new_block(self):
         pass
 
-    def new_transaction(self):
+    def new_transaction(self, sender, recipient, amount):
+        transaction = {
+          'sender': sender,
+          'recipient': recipient,
+          'amount': amount
+        }
+        self.transactions.append(transaction)
+        return self.last_block()
         pass
 
     @staticmethod
