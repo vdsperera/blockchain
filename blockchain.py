@@ -15,5 +15,6 @@ class Blockchain:
 
     @property
     def last_block(self):
+        return self.chain[-1]
         pass
     
