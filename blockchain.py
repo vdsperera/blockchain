@@ -69,7 +69,17 @@ def new_transaction():
   # }
   values = request.get_json()
   required = ['sender', 'recipient', 'amount']
-  if not all(for value in values:)
+  # if not all(for value in values:)
+
+  for r in required:
+    if (r in values) == False:
+        return 'missing values'
+
+  index = blockchain.new_transaction(values['sender'],
+    values['recipient'], values['amount'])
+
+  response = f'The transaction will be added to block {index}'
+  return jsonify(response)
   pass
 
 @app.route('/mine', methods=['GET'])
