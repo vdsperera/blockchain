@@ -3,6 +3,7 @@ import hashlib
 from uuid import uuid4
 from textwrap import dedent
 import json
+import requests
 from flask import Flask, jsonify, request
 
 class Blockchain:
@@ -10,13 +11,15 @@ class Blockchain:
         self.chain = []
         self.current_transactions = []
 
-    def new_block(self, proof):
+        self.new_block(previous_hash='1', proof=100)
+
+    def new_block(self, previous_hash, proof):
         block = {
           'index': len(self.chain) + 1,
           'timstamp': time(),
           'transactions': self.current_transactions,
           'proof': proof,
-          'previous_hash': self.hash(self.last_block())
+          'previous_hash': previous_hash
         }
         self.chain.append(block)
         self.current_transactions = []
@@ -40,6 +43,7 @@ class Blockchain:
       return check_proof
       pass
 
+    @staticmethod
     def valid_proof(previous_proof, check_proof):
       guess_answer = f'{previous_proof}{check_proof}'.encode()
       guess_hash = hashlib.sha256(guess_answer).hexdigest()
@@ -48,7 +52,8 @@ class Blockchain:
 
     @staticmethod
     def hash(block):
-        pass
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return hashlib.sha256(block_string).hexdigest()
 
     @property
     def last_block(self):
@@ -58,6 +63,7 @@ class Blockchain:
 
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 node_identifier = str(uuid4()).replace('-', '')
 
@@ -82,19 +88,20 @@ def new_transaction():
     values['recipient'], values['amount'])
 
   response = f'The transaction will be added to block {index}'
-  return jsonify(response)
+  return response
   pass
 
 @app.route('/mine', methods=['GET'])
 def mine():
-  last_block = blockchain.last_block()
+  last_block = blockchain.last_block
   previous_proof = last_block['proof']
   proof = blockchain.proof_of_work(previous_proof)
 
   blockchain.new_transaction(sender='0',
     recipient=node_identifier, amount=1)
 
-  block = blockchain.new_block(proof)
+  previous_hash = blockchain.hash(last_block)
+  block = blockchain.new_block(previous_hash, proof)
 
   # response = {
   #     'message': "New Block Forged",
