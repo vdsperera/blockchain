@@ -48,6 +48,23 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "chain",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{blockchain}}/chain",
+					"host": [
+						"{{blockchain}}"
+					],
+					"path": [
+						"chain"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
