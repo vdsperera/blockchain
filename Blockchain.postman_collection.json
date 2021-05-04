@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "84fccca5-3b19-45d6-8ceb-447b8934808d",
+		"name": "Blockchain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "new transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"sender\": \"001AF\",\n   \"recipient\": \"01EF\",\n   \"amount\": \"2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{blockchain}}/transactions/new",
+					"host": [
+						"{{blockchain}}"
+					],
+					"path": [
+						"transactions",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mine",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{blockchain}}/mine",
+					"host": [
+						"{{blockchain}}"
+					],
+					"path": [
+						"mine"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
