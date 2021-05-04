@@ -10,7 +10,6 @@ class Blockchain:
     def __init__(self):
         self.chain = []
         self.current_transactions = []
-
         self.new_block(previous_hash='1', proof=100)
 
     def new_block(self, previous_hash, proof):
@@ -127,7 +126,7 @@ def full_chain():
     'chain': blockchain.chain,
     'length': len(blockchain.chain)
   }
-  return response
+  return jsonify(response)
   pass
 
 if __name__ == '__main__':
