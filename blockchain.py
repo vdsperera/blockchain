@@ -5,11 +5,13 @@ from textwrap import dedent
 import json
 import requests
 from flask import Flask, jsonify, request
+from urllib.parse import urlparse
 
 class Blockchain:
     def __init__(self):
         self.chain = []
         self.current_transactions = []
+        self.nodes = set()
         self.new_block(previous_hash='1', proof=100)
 
     def new_block(self, previous_hash, proof):
@@ -58,6 +60,10 @@ class Blockchain:
     def last_block(self):
         return self.chain[-1]
         pass
+
+    def register_node(self, address):
+        passed_url = urlparse(address)
+        self.nodes.add(passed_url.netloc)
 
 
 
